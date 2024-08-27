@@ -1,4 +1,4 @@
-//
+// A program that calculates Fahrenheit with given Celsius
 #include <iostream>
 using namespace std;
 
