@@ -33,6 +33,9 @@ int main()
   }
 
   finalCharge = ((distance + 499) / 500) * charge;
+
+  cout << fixed << setprecision(2);
+  cout << "Total shipping charge is " << finalCharge << endl;
   
   return 0;
 }
