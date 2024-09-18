@@ -40,6 +40,7 @@ void getJudgeData(double &score) {
 
 bool validateScore(double score) {
     return (score >= MIN_SCORE && score <= MAX_SCORE);
+}
 
 void calcScore(double score1, double score2, double score3, double score4, double score5) {
     double lowest = findLowest(score1, score2, score3, score4, score5);
