@@ -6,7 +6,7 @@
 using namespace std;
 
 int main() {
-    ifstream inputFile("scores.txt"); // Name of the file to read from
+    ifstream inputFile("/Users/ethanpham/Desktop/RandomDouble.txt"); // Name of the file to read from
     if (!inputFile) {
         cerr << "Error opening file." << endl;
         return 1;
