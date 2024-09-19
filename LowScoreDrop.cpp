@@ -1,7 +1,8 @@
 // A program that will process a number of floating-point scores from a file
 #include <iostream>
 #include <fstream>
-#include <limits> // For numeric limits
+#include <limits>  // For numeric limits
+#include <iomanip> // For setprecision
 
 using namespace std;
 
@@ -36,6 +37,8 @@ int main() {
     // Calculate the average after dropping the lowest score
     float average = (totalSum - lowestScore) / (count - 1);
 
+    // Set precision for output
+    cout << fixed << setprecision(2);
     cout << "Average after dropping the lowest score: " << average << endl;
 
     return 0;
