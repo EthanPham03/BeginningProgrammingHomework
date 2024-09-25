@@ -5,86 +5,76 @@
 #include <vector>
 using namespace std;
 
-void readAnswers(const string &filename, vector<char> &answers);
-int compareAnswers(const vector<char> &correct, const vector<char> &student, vector<int> &missedQuestions);
-void displayResults(const vector<char> &correct, const vector<char> &student, const vector<int> &missedQuestions);
+void readAnswers(const string& fileName, vector<char>& answers);
+void compareAnswers(const vector<char>& correct, const vector<char>& student, vector<int>& missedQuestions);
+void displayResults(const vector<char>& correct, const vector<char>& student, const vector<int>& missedQuestions);
 
 int main() {
     string correctFile, studentFile;
-    vector<char> correctAnswers;
-    vector<char> studentAnswers;
-    vector<int> missedQuestions;
 
     cout << "Enter correct answers file: ";
     cin >> correctFile;
-    cout << "Enter student's answers file: ";
+    cout << "Enter correct answers file: ";
     cin >> studentFile;
+
+    vector<char> correctAnswers;
+    vector<char> studentAnswers;
 
     readAnswers(correctFile, correctAnswers);
     readAnswers(studentFile, studentAnswers);
 
-    if (correctAnswers.size() != studentAnswers.size()) {
-      cout << "The number of ansers in the file do not match."
-        return 1;
-    }
+    vector<int> missedQuestions;
 
-    int totalMissed = compareAnswers(correctAnswers, studentAnswers, missedQuestions);
-
+    compareAnswers(correctAnswers, studentAnswers, missedQuestions);
     displayResults(correctAnswers, studentAnswers, missedQuestions);
-
-    cout << "Total missed questions: " << totalMissed << endl;
-
-    int totalQuestions = correctAnswers.size();
-    int totalCorrect = totalQuestions - totalMissed;
-    double percentageCorrect = (static_cast<double>(totalCorrect) / totalQuestions) * 100;
-
-    cout << fixed << setprecision(2);
-    cout << "Percentage of questions answered correctly: " << percentageCorrect << "%" << endl;
-
-    if (percentageCorrect >= 70.0) {
-        cout << "The student passed the exam." << endl;
-    } else {
-        cout << "The student failed the exam." << endl;
-    }
 
     return 0;
 }
 
-void readAnswers(const string &filename, vector<char> &answers) {
-    ifstream file(filename);
+void readAnswers(const string& fileName, vector<char>& answers) {
+    ifstream file(fileName.c_str());
     char answer;
-
     if (!file) {
-        cout << "Error opening file: " << filename << endl;
-        exit(1);
+        cout << "Error opening file: " << fileName << endl;
+        return;
     }
-
     while (file >> answer) {
         answers.push_back(answer);
     }
-
     file.close();
 }
 
-int compareAnswers(const vector<char> &correct, const vector<char> &student, vector<int> &missedQuestions) {
-    int missed = 0;
-
-    for (size_t i = 0; i < correct.size(); i++) {
+void compareAnswers(const vector<char>& correct, const vector<char>& student, vector<int>& missedQuestions) {
+    for (size_t i = 0; i < correct.size() && i < student.size(); i++) {
         if (correct[i] != student[i]) {
-            missedQuestions.push_back(i);
-            missed++;
+            missedQuestions.push_back(i); 
         }
     }
-
-    return missed;
 }
 
-void displayResults(const vector<char> &correct, const vector<char> &student, const vector<int> &missedQuestions) {
-    cout << "\nQuestions Missed:" << endl;
-    cout << setw(10) << "Question" << setw(20) << "Correct Answer" << setw(20) << "Student Answer" << endl;
-    cout << "----------------------------------------------------------" << endl;
+void displayResults(const vector<char>& correct, const vector<char>& student, const vector<int>& missedQuestions) {
+    int totalQuestions = correct.size();
+    int missedCount = missedQuestions.size();
+    int correctCount = totalQuestions - missedCount;
+    double correctPercentage = (static_cast<double>(correctCount) / totalQuestions) * 100;
 
-    for (int question : missedQuestions) {
-        cout << setw(10) << question + 1 << setw(20) << correct[question] << setw(20) << student[question] << endl;
+    if (missedCount > 0) {
+        cout << "Missed Questions: " << endl;
+        cout << "Question\tCorrect Answer\tStudent Answer" << endl;
+        for (size_t i = 0; i < missedQuestions.size(); i++) {
+            int question = missedQuestions[i];
+            cout << setw(8) << question + 1 << "\t" << setw(14) << correct[question] 
+                 << "\t" << setw(14) << student[question] << endl;
+        }
+    } else {
+        cout << "No questions missed." << endl;
+    }
+
+    cout << "\nTotal Questions Missed: " << missedCount << endl;
+    cout << "Percentage Correct: " << fixed << setprecision(2) << correctPercentage << "%" << endl;
+    if (correctPercentage >= 70.0) {
+        cout << "Exam Passed" << endl;
+    } else {
+        cout << "Exam Failed" << endl;
     }
 }
