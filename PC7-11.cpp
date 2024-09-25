@@ -14,7 +14,7 @@ int main() {
 
     cout << "Enter correct answers file: ";
     cin >> correctFile;
-    cout << "Enter correct answers file: ";
+    cout << "Enter student answers file: ";
     cin >> studentFile;
 
     vector<char> correctAnswers;
