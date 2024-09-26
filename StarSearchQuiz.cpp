@@ -48,8 +48,8 @@ void calcScore(const vector<double>& scores) {
     double highest = findHighest(scores);
     double sum = 0.0;
 
-    for (double score : scores) {
-        sum += score;
+    for (int i = 0; i < scores.size(); i++) {
+        sum += scores[i];
     }
 
     sum = sum - lowest - highest;
