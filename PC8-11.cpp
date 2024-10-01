@@ -10,20 +10,26 @@ int main()
     const int NUM_NAMES = 50;
     string names[NUM_NAMES];
     string fileName;
+    int actualCout = 0;
 
-    cout << "Enter the file name: ";
+    cout << "Enter the file: ";
     cin >> fileName;
 
     ifstream inputFile(fileName);
     if (!inputFile)
     {
-        cout << "Error opening file " << fileName << endl;
+        cout << "Error opening file." << endl;
         return 1;
     }
 
     for (int i = 0; i < NUM_NAMES; i++)
     {
-        getline(inputFile, names[i]);
+         if (getline(inputFile, names[i]))
+        {
+            actualCount++;
+        } else {
+            break;
+        }
     }
     
     inputFile.close(); 
@@ -34,10 +40,10 @@ int main()
         cout << names[i] << endl;
     }
 
-    sort(names, names + NUM_NAMES);
+    sort(names, names + actualCount);
 
     cout << "\nSorted Names:\n";
-    for (int i = 0; i < NUM_NAMES; i++)
+    for (int i = 0; i < actualCount; i++)
     {
         cout << names[i] << endl;
     }
