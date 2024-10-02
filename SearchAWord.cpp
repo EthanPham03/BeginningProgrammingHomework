@@ -6,20 +6,19 @@
 #include <sstream>
 
 bool searchWord(const std::vector<std::string>& words, const std::string& target) {
-    for (const auto& word : words) {
-        if (word == target) {
-            return true;  
+    for (size_t i = 0; i < words.size(); ++i) {
+        if (words[i] == target) {
+            return true; 
         }
     }
-    return false;  
+    return false; 
 }
 
 int main() {
     const int MAX_WORDS = 10000;
     std::vector<std::string> words;
     std::string word;
-
-    // Read the first file and store the words
+    
     std::ifstream inputFile("/Users/ethanpham/Desktop/RandomWords.txt");
     if (!inputFile) {
         std::cerr << "Error opening the file." << std::endl;
