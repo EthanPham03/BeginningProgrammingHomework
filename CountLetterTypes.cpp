@@ -16,7 +16,7 @@ int main() {
 
     while (getline(inputFile, line)) {
         for (int i = 0; i < line.length(); i++) {
-            if (isupper(ch)) {
+            if (isupper(line[i])) {
                 upperCaseCount++;
             }
         }
