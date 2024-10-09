@@ -1,7 +1,9 @@
 // A program that checks passwords for qualifications
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <cctype>
+
 using namespace std;
 
 bool isValidPassword(const string& password) {
@@ -23,17 +25,24 @@ bool isValidPassword(const string& password) {
 }
 
 int main() {
+    ifstream inputFile("/Users/ethanpham/Desktop/CandidatePasswords.txt");
+    
+    if (!inputFile) {
+        cerr << "Error: Could not open file\n";
+        return 1; 
+    }
+
     string password;
     int validCount = 0, invalidCount = 0;
 
-    cout << "Enter passwords (Ctrl+D to stop):\n";
-
-    while (getline(cin, password)) {
+    while (getline(inputFile, password)) {
         if (isValidPassword(password))
             validCount++;
         else
             invalidCount++;
     }
+
+    inputFile.close();
 
     cout << "Number of valid passwords: " << validCount << "\n";
     cout << "Number of invalid passwords: " << invalidCount << "\n";
